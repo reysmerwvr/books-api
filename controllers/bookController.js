@@ -4,7 +4,6 @@ const getBooks = (req, res) => {
   const searchParams = new URLSearchParams(req.query);
   const query = {};
   for (const [key, value] of searchParams) {
-    console.log(Book.schema.paths);
     if (Object.keys(Book.schema.paths).indexOf(key) !== -1) {
       query[key] = value;
     }
@@ -13,7 +12,13 @@ const getBooks = (req, res) => {
     if (err) {
       res.status(500).send(err);
     } else {
-      res.json(books);
+      const mappedBooks = books.map(book => {
+        const newBook = book.toJSON();
+        newBook.links = {};
+        newBook.links.self = `http://${req.headers.host}/api/books/${book._id}`;
+        return newBook;
+      });
+      res.json(mappedBooks);
     }
   });
 };
