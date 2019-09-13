@@ -26,6 +26,7 @@ Run npm commands.
 
 ```bash
 cd books-api
+npm install
 npm run gulp
 ```
 
