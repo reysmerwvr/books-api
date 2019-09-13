@@ -5,14 +5,14 @@ const should = require("should"),
   Book = mongoose.model("Book"),
   agent = request.agent(app);
 
-describe("Book Crud Test", () => {
-  it("Should allow a book to be posted and return a read and _id", done => {
+describe("Book Crud Test", function() {
+  it("Should allow a book to be posted and return a read and _id", function(done) {
     const bookPost = { title: "new Book", author: "RV", genre: "Fiction" };
     agent
-      .post("api/books")
+      .post("/api/books")
       .send(bookPost)
       .expect(200)
-      .end((err, results) => {
+      .end(function(err, results) {
         results.body.read.should.equal(false);
         results.body.should.have.property("_id");
         done();
